@@ -11,7 +11,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class HelloWorldServer {
 	public static void main(String[] args) {
-		//用EventLoop 代替原来的 ChannelFactory
+		//EventLoop 代替原来的 ChannelFactory
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
