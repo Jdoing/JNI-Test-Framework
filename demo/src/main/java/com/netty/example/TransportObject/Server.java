@@ -1,6 +1,5 @@
 package com.netty.example.TransportObject;
 import io.netty.bootstrap.ServerBootstrap;
-
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -10,13 +9,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class Server {
-	private int port;
 
-    public Server(int port) {
-        this.port = port;
-    }
-
-    public void run() throws Exception {
+    public static void main(String[] args){
+    	int port=8000;
+    	
         EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
@@ -39,7 +35,8 @@ public class Server {
             // In this example, this does not happen, but you can do that to gracefully
             // shut down your server.
             f.channel().closeFuture().sync();
-        } finally {
+        }catch (InterruptedException e) {
+		} finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
