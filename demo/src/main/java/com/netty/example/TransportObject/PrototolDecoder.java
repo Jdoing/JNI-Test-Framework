@@ -2,8 +2,8 @@ package com.netty.example.TransportObject;
 
 import java.util.List;
 
-import com.netty.example.utils.ByteBufToBytes;
-import com.netty.example.utils.ByteObjConverter;
+import com.netty.utils.ByteBufToBytes;
+import com.netty.utils.ByteObjConverter;
 
 import io.netty.buffer.ByteBuf;  
 import io.netty.channel.ChannelHandlerContext;  

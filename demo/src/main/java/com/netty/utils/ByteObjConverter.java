@@ -1,4 +1,4 @@
-package com.netty.example.utils;
+package com.netty.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
