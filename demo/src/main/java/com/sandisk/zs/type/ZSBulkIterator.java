@@ -34,7 +34,6 @@ public class ZSBulkIterator implements Iterator<ZSObjectOp>
         this.container.bulkEnumCreate();
     }
 
-    @Override
     public boolean hasNext()
     {
         if (index == 0)
@@ -73,7 +72,7 @@ public class ZSBulkIterator implements Iterator<ZSObjectOp>
         return false;
     }
 
-    @Override
+    
     public ZSObjectOp next()
     {
         ZSObjectOp next = list.get(index);
@@ -81,7 +80,7 @@ public class ZSBulkIterator implements Iterator<ZSObjectOp>
         return next;
     }
 
-    @Override
+    
     public void remove()
     {
         throw new RuntimeException("Remote operation is not supported");

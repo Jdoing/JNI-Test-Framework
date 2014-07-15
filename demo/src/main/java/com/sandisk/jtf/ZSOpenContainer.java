@@ -1,4 +1,4 @@
-package com.netty.demo;
+package com.sandisk.jtf;
 public class ZSOpenContainer extends JTFCommand {
     public String execute() {
         System.out.println("Call ZSOpenContainer"); // Replace this with real API call

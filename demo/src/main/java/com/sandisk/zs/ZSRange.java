@@ -94,6 +94,15 @@ public class ZSRange
     }
 
     /**
+     * 
+     * @return
+     */
+    public int getRange(){
+    	return NativeZSRange.ZSGetRange(containerId, meta);
+    }
+    
+    
+    /**
      * Get range meta.
      * @return range meta
      */

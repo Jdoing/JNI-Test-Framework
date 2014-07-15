@@ -1,4 +1,4 @@
-package com.netty.demo;
+package com.sandisk.jtf;
 public class Utils
 {
     private final static String propFile = "/tmp/zs-jtf.prop";

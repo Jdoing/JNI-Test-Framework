@@ -1,4 +1,4 @@
-package com.netty.demo;
+package com.sandisk.jtf;
 import io.netty.buffer.ByteBuf;
 
 import io.netty.channel.ChannelHandlerContext;

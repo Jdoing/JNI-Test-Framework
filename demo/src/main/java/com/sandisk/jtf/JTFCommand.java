@@ -1,4 +1,4 @@
-package com.netty.demo;
+package com.sandisk.jtf;
 import java.util.Properties;
 
 /**
