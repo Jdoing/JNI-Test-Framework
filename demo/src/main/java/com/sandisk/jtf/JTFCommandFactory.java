@@ -1,4 +1,5 @@
 package com.sandisk.jtf;
+
 import java.util.Properties;
 
 /**
@@ -8,8 +9,8 @@ public class JTFCommandFactory
 {
     public static JTFCommand generateCommandObject(String rawCommand) throws Exception
     {
-        String[] tokens = rawCommand.split("\\s");
-        JTFCommand command = (JTFCommand) Class.forName(tokens[0]).newInstance();
+        String[] tokens = rawCommand.split("\\s+");
+        JTFCommand command = (JTFCommand) Class.forName("com.sandisk.jtf.commands." + tokens[0]).newInstance();
         command.setArgs(parse(tokens));
         return command;
     }
@@ -29,3 +30,4 @@ public class JTFCommandFactory
         return args;
     }
 }
+
