@@ -70,7 +70,7 @@ public class ZSOpenContainer extends JTFCommand
 
         // FIXME: ContainerMode?
         // ContainerMode containerMode = ContainerMode.HASHMODE;
-  
+
         ContainerProperty containerProps = ContainerProperty.getDefautProperty();
         if (containerSize != null) {
             containerProps.setSize(containerSize);

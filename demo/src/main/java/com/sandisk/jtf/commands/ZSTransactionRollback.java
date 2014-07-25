@@ -1,4 +1,4 @@
-package com.sandisk.jtf;
+package com.sandisk.jtf.commands;
 import com.sandisk.zs.*;
 import com.sandisk.zs.exception.*;
 
@@ -7,7 +7,7 @@ public class ZSTransactionRollback {
 		try{
 		ZSTransaction t = new ZSTransaction();
 		t.rollback();
-		return "sucess";
+		return "OK";
 		}
 		catch(ZSException e){
 			return "server fail"+e.toString();

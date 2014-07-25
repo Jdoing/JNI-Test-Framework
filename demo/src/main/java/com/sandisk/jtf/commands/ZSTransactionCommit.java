@@ -1,13 +1,12 @@
-package com.sandisk.jtf;
+package com.sandisk.jtf.commands;
+import com.sandisk.jtf.JTFCommand;
 import com.sandisk.zs.*;
 import com.sandisk.zs.exception.*;
-
-public class ZSTransactionStart extends JTFCommand{
-	
+public class ZSTransactionCommit extends JTFCommand{
 	public String execute(){
 		try{
 		ZSTransaction t = new ZSTransaction();
-		t.start();
+		t.commit();
 		return "OK";
 		}
 		catch(ZSException e){
@@ -17,5 +16,4 @@ public class ZSTransactionStart extends JTFCommand{
 			return "client fail"+e.toString();
 		}
 	}
-
 }
