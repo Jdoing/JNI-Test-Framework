@@ -2,6 +2,7 @@ package com.sandisk.jtf.commands;
 
 import com.sandisk.jtf.*;
 import com.sandisk.jtf.exception.JTFException;
+import com.sandisk.jtf.util.ByteBuffManager;
 import com.sandisk.zs.ZSContainer;
 import com.sandisk.zs.ZSRange;
 import com.sandisk.zs.exception.ZSContainerException;
@@ -22,23 +23,39 @@ public class ZSGetNextRange extends JTFCommand {
 			ZSRange range = new ZSRange(container.getContainerId());
 
 			RangeData[] resultDatas = range.getDatas(n_in);
-			
-			int check_fail=0;
-			
-			if(check){
-				for(int i = 0, length = resultDatas.length; i < length; i++){
-					
+
+			int check_fail = 0;
+			byte[] data;
+			int dataLength = -1;
+			int dataOffset = 0;
+			if (check) {
+				for (int i = 0, length = resultDatas.length; i < length; i++) {
+					RangeData rd = resultDatas[i];
+
+					dataLength = rd.getData().length;
+					data = new byte[dataLength];
+
+					// This place would be changed!
+					// dataOffset = rd.getKey();
+
+					ByteBuffManager.getInstance().arraycopy(data, dataOffset,
+							dataLength);
+
+					if (!data.equals(rd.getData())) {
+						check_fail++;
+					}
 				}
 			}
-		} catch (JTFException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (check_fail == 0)
+				return "OK";
+			else
+				return "SERVER_ERROR";
 		} catch (ZSContainerException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return handleServerErrorReturn(e);
+		} catch (Exception e) {
+			return handleClientErrorReturn(e);
 		}
-
-		return null;
 	}
 
 	private void getProperties() throws JTFException {
