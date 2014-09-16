@@ -8,6 +8,8 @@
  */
 package com.sandisk.zsjtf.command;
 
+import java.util.Properties;
+
 import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.exec.ZSGetRangeExec;
@@ -30,20 +32,28 @@ import com.sandisk.zsjtf.util.Log;
  */
 public class ZSGetRange extends JTFCommand {
 
-	private static long cguid = 0;
-	private int keybufSize = 0;
-	private long databufSize = 0;
-	private int keyLenStart = 0;
-	private int KeyLenEnd = 0;
-	private int startKey = 0;
-	private int endKey = 0;
-	private long startSeq = 0;
-	private long endSeq = 0;
-	private int flags = 0;
-	
+	public ZSGetRange(String rawCommand) throws JTFException {
+		super(rawCommand);
+		// TODO Auto-generated constructor stub
+
+		getProperties();
+
+	}
+
+	private static Long cguid = 0L;
+	private Integer keybufSize = 0;
+	private Long databufSize = 0L;
+	private Integer keyLenStart = 0;
+	private Integer KeyLenEnd = 0;
+	private Integer startKey = 0;
+	private Integer endKey = 0;
+	private Long startSeq = 0L;
+	private Long endSeq = 0L;
+	private Integer flags = 0;
+
 	private String ZSAdapterName = "ZSRangeAdapter";
 	private String ZSCommandExecName = "ZSGetRangeExec";
-	
+
 	public String execute() {
 
 		return this.zsCommandExec.Execute();
@@ -102,7 +112,7 @@ public class ZSGetRange extends JTFCommand {
 		// TODO Auto-generated method stub
 		return ZSCommandExecName;
 	}
-	
+
 	// public String execute() {
 	// try {
 	// Log.logDebug("Start to getProperties:");
@@ -136,37 +146,37 @@ public class ZSGetRange extends JTFCommand {
 	// }
 	// }
 
-//	private void setMeta(RangeMeta rmeta) throws Exception {
-//		if (flags == 0) {
-//			flags = ZSRangeFlags.START_GT | ZSRangeFlags.END_LE;
-//		}
-//
-//		keybufSize = (keybufSize != 0) ? keybufSize : MAX_KEY_LEN;
-//		databufSize = (databufSize != 0) ? databufSize : MAX_DATA_LEN;
-//		keyLenStart = (keyLenStart != 0) ? keyLenStart : 8;
-//		KeyLenEnd = (KeyLenEnd != 0) ? KeyLenEnd : 8;
-//		startSeq = (startSeq != 0) ? startSeq : 0;
-//		endSeq = (endSeq != 0) ? endSeq : 0;
-//
-//		String formatter = String.format("%%0%dd", keyLenStart);
-//		String keyStart = String.format(formatter, startKey);
-//
-//		String fmt = String.format("%%0%dd", KeyLenEnd);
-//		String keyEnd = String.format(fmt, endKey);
-//
-//		rmeta.setFlags(flags);
-//		rmeta.setStartInfo(keyStart.getBytes(), flags);
-//		rmeta.setEndInfo(keyEnd.getBytes(), flags);
-//		rmeta.setStartSeq(startSeq);
-//		rmeta.setEndSeq(endSeq);
-//	}
+	// private void setMeta(RangeMeta rmeta) throws Exception {
+	// if (flags == 0) {
+	// flags = ZSRangeFlags.START_GT | ZSRangeFlags.END_LE;
+	// }
+	//
+	// keybufSize = (keybufSize != 0) ? keybufSize : MAX_KEY_LEN;
+	// databufSize = (databufSize != 0) ? databufSize : MAX_DATA_LEN;
+	// keyLenStart = (keyLenStart != 0) ? keyLenStart : 8;
+	// KeyLenEnd = (KeyLenEnd != 0) ? KeyLenEnd : 8;
+	// startSeq = (startSeq != 0) ? startSeq : 0;
+	// endSeq = (endSeq != 0) ? endSeq : 0;
+	//
+	// String formatter = String.format("%%0%dd", keyLenStart);
+	// String keyStart = String.format(formatter, startKey);
+	//
+	// String fmt = String.format("%%0%dd", KeyLenEnd);
+	// String keyEnd = String.format(fmt, endKey);
+	//
+	// rmeta.setFlags(flags);
+	// rmeta.setStartInfo(keyStart.getBytes(), flags);
+	// rmeta.setEndInfo(keyEnd.getBytes(), flags);
+	// rmeta.setStartSeq(startSeq);
+	// rmeta.setEndSeq(endSeq);
+	// }
 
 	private void getProperties() throws JTFException {
 		Log.logDebug("Get guid");
 		cguid = this.getLongProperty(CGUID, true);
 
 		Log.logDebug("get keybufSize");
-		keybufSize = this.getIntegerProperty(KEYBUF_SIZE, false);
+		keybufSize = getIntegerProperty(KEYBUF_SIZE, false);
 
 		Log.logDebug("get databufSize");
 		databufSize = this.getLongProperty(DATABUF_SIZE, false);
@@ -183,11 +193,11 @@ public class ZSGetRange extends JTFCommand {
 		Log.logDebug("get KeyLenEnd");
 		KeyLenEnd = this.getIntegerProperty(KEYLEN_END, false);
 
-		Log.logDebug("get startSeq");
-		// startSeq = this.getLongProperty(START_SEQ, false);
-
-		Log.logDebug("get endSeq");
-		endSeq = this.getLongProperty(END_SEQ, false);
+		 Log.logDebug("get startSeq");
+		 startSeq = this.getLongProperty(START_SEQ, false);
+		
+		 Log.logDebug("get endSeq");
+		 endSeq = this.getLongProperty(END_SEQ, false);
 
 		Log.logDebug("Get flags");
 		// flags = this.getIntegerProperty(FLAGS, false,FLAGS_DEFAULT_VALUE);

@@ -6,24 +6,22 @@ import com.sandisk.zsjtf.exception.JTFException;
 
 public class ZSCommandExecFactory {
 
-	public static ZSCommandExec createZSCommandExec(String zsCommandExecName,ZSAdapter zsAdapter)
+	public static ZSCommandExec createZSCommandExec(String ZSCommandExecName,ZSAdapter zsAdapter)
 			throws JTFException, Exception {
 
-		if (zsAdapter == null) {
-			throw new JTFException("The ZSCommandExecName should not be null");
+		if (zsAdapter == null || ZSCommandExecName == null) {
+			throw new JTFException("The ZSCommandExecName or ZSAdapter should not be null");
 		}
 
-		String className = "com.sandisk.zsjtf.exec."+zsCommandExecName;
+		String className = "com.sandisk.zsjtf.exec."+ZSCommandExecName;
 
-		Class clazz = Class.forName(className);
+		Class<?> clazz = Class.forName(className);
 
-		Object[] args = new Object[]{zsAdapter};
-//		Class args = ZSAdapter.class;
-//		Class args = zsAdapter.getClass();
+		//Object[] args = new Object[]{zsAdapter};
 		
-		Constructor constructor = clazz.getConstructor(ZSAdapter.class);
+		Constructor<?> constructor = clazz.getConstructor(ZSAdapter.class);
 
-		ZSCommandExec zsCommandExec = (ZSCommandExec) constructor.newInstance(args);
+		ZSCommandExec zsCommandExec = (ZSCommandExec) constructor.newInstance(zsAdapter);
 
 		return zsCommandExec;
 	}

@@ -13,12 +13,13 @@ import com.sandisk.zsjtf.exec.ZSGetRangeExec;
 
 public class TestZSCommandFactory {
 
-	String ZSCommandExecName;
+	private String ZSCommandExecName;
+
 	private ZSRangeAdapter zsRangeAdapter;
+
 	@Before
 	public void setUp() throws Exception {
-		ZSCommandExecName = "ZSGetRangeExec";
-		zsRangeAdapter = new ZSRangeAdapter();
+
 	}
 
 	@After
@@ -27,12 +28,25 @@ public class TestZSCommandFactory {
 
 	@Test
 	public void testCreateZSCommandExec() throws JTFException, Exception {
-		ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(ZSCommandExecName,zsRangeAdapter);
-		
-		assertNotNull("createZSCommandExec a null zsGetRangeExec",zsCommandExec);
-		assertEquals("create a wrong ZSCommandExec command",ZSGetRangeExec.class,zsCommandExec.getClass());
-		
-		//fail("Not yet implemented");
+		ZSCommandExecName = "ZSGetRangeExec";
+		zsRangeAdapter = new ZSRangeAdapter();
+		ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(
+				ZSCommandExecName, zsRangeAdapter);
+
+		assertNotNull("createZSCommandExec a null zsGetRangeExec",
+				zsCommandExec);
+		assertEquals("create a wrong ZSCommandExec command",
+				ZSGetRangeExec.class, zsCommandExec.getClass());
+
+		// fail("Not yet implemented");
 	}
 
+	@Test(expected = JTFException.class)
+	public void testCreateZSCommandExecWithNull() throws JTFException, Exception {
+		ZSCommandExecName = null;
+		zsRangeAdapter = null;
+		ZSCommandExecFactory.createZSCommandExec(ZSCommandExecName,
+				zsRangeAdapter);
+
+	}
 }
