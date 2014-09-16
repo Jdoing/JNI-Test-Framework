@@ -8,8 +8,6 @@
  */
 package com.sandisk.zsjtf.command;
 
-import java.util.Properties;
-
 import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.exec.ZSGetRangeExec;

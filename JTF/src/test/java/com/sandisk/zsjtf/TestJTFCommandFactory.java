@@ -4,6 +4,7 @@
 package com.sandisk.zsjtf;
 
 import static org.junit.Assert.*;
+
 import org.junit.*;
 
 import com.sandisk.zsjtf.command.*;
@@ -30,6 +31,7 @@ public class TestJTFCommandFactory {
 	public void tearDown() throws Exception {
 	}
 
+	
 	@Test
 	public void testWithCguid() throws Exception {
 		String rawCommand = "ZSGetRange cguid=5";
@@ -43,8 +45,6 @@ public class TestJTFCommandFactory {
 
 	@Test
 	public void testWithParameters() throws Exception {
-//		String rawCommand = "ZSGetRange databuf_size=1024 keybuf_size=50 cguid=5 keylen_end=8 start_key=0 keylen_start=8 end_key=10";
-
 		String rawCommand = "ZSGetRange databuf_size=1024 keybuf_size=50 cguid=5 keylen_end=8 start_key=0 keylen_start=8 end_key=10";
 		
 		JTFCommand command = JTFCommandFactory
