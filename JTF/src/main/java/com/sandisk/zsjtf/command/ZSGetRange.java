@@ -10,10 +10,6 @@ package com.sandisk.zsjtf.command;
 
 import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.exception.JTFException;
-import com.sandisk.zsjtf.exec.ZSGetRangeExec;
-import com.sandisk.zs.*;
-import com.sandisk.zs.exception.*;
-import com.sandisk.zs.type.RangeMeta;
 import com.sandisk.zs.type.ZSRangeFlags;
 import com.sandisk.zsjtf.util.Log;
 
@@ -36,9 +32,11 @@ public class ZSGetRange extends JTFCommand {
 
 		getProperties();
 
+		setOthers();
+
 	}
 
-	private static Long cguid = 0L;
+	private Long cguid = 0L;
 	private Integer keybufSize = 0;
 	private Long databufSize = 0L;
 	private Integer keyLenStart = 0;
@@ -48,6 +46,9 @@ public class ZSGetRange extends JTFCommand {
 	private Long startSeq = 0L;
 	private Long endSeq = 0L;
 	private Integer flags = 0;
+
+	private String keyStart;
+	private String keyEnd;
 
 	private String ZSAdapterName = "ZSRangeAdapter";
 	private String ZSCommandExecName = "ZSGetRangeExec";
@@ -101,8 +102,16 @@ public class ZSGetRange extends JTFCommand {
 		return flags;
 	}
 
-	public static Long getCguid() {
+	public Long getCguid() {
 		return cguid;
+	}
+
+	public String getKeyStart() {
+		return keyStart;
+	}
+
+	public String getKeyEnd() {
+		return keyEnd;
 	}
 
 	@Override
@@ -170,38 +179,64 @@ public class ZSGetRange extends JTFCommand {
 	// }
 
 	private void getProperties() throws JTFException {
-		Log.logDebug("Get guid");
-		cguid = this.getLongProperty(CGUID, true);
+		Log.logDebug("get guid");
+		cguid = getLongProperty(CGUID, true);
 
 		Log.logDebug("get keybufSize");
 		keybufSize = getIntegerProperty(KEYBUF_SIZE, false);
+		keybufSize = (keybufSize != 0) ? keybufSize : MAX_KEY_LEN;
 
 		Log.logDebug("get databufSize");
-		databufSize = this.getLongProperty(DATABUF_SIZE, false);
+		databufSize = getLongProperty(DATABUF_SIZE, false);
+		databufSize = (databufSize != 0) ? databufSize : MAX_DATA_LEN;
 
 		Log.logDebug("get startKey");
-		startKey = this.getIntegerProperty(START_KEY, false);
+		startKey = getIntegerProperty(START_KEY, false);
 
 		Log.logDebug("get endKey");
-		endKey = this.getIntegerProperty(END_KEY, false);
+		endKey = getIntegerProperty(END_KEY, false);
 
 		Log.logDebug("get keyLenStart");
-		keyLenStart = this.getIntegerProperty(KEYLEN_START, false);
+		keyLenStart = getIntegerProperty(KEYLEN_START, false);
+		keyLenStart = (keyLenStart != 0) ? keyLenStart : 8;
 
 		Log.logDebug("get KeyLenEnd");
-		KeyLenEnd = this.getIntegerProperty(KEYLEN_END, false);
+		KeyLenEnd = getIntegerProperty(KEYLEN_END, false);
+		KeyLenEnd = (KeyLenEnd != 0) ? KeyLenEnd : 8;
 
-		 Log.logDebug("get startSeq");
-		 startSeq = this.getLongProperty(START_SEQ, false);
-		
-		 Log.logDebug("get endSeq");
-		 endSeq = this.getLongProperty(END_SEQ, false);
+		Log.logDebug("get startSeq");
+		startSeq = getLongProperty(START_SEQ, false);
+		startSeq = (startSeq != 0) ? startSeq : 0;
+
+		Log.logDebug("get endSeq");
+		endSeq = getLongProperty(END_SEQ, false);
+		endSeq = (endSeq != 0) ? endSeq : 0;
 
 		Log.logDebug("Get flags");
 		// flags = this.getIntegerProperty(FLAGS, false,FLAGS_DEFAULT_VALUE);
-		String flagsTemp = this.getStringProperty(FLAGS, false);
+		String flagsTemp = getStringProperty(FLAGS, false);
 
 		flags = getFlags(flagsTemp);
+	}
+
+	private String format(Object fmt, Object original) {
+		// String formatter = String.format("%%0%dd", keyLenStart);
+		// String keyStart = String.format(formatter, startKey);
+		//
+		// String fmt = String.format("%%0%dd", KeyLenEnd);
+		// String keyEnd = String.format(fmt, endKey);
+
+		String formatter = String.format("%%0%dd", fmt);
+
+		String value = String.format(formatter, original);
+
+		return value;
+	}
+
+	private void setOthers() {
+		// TODO Auto-generated method stub
+		this.keyStart = format(keyLenStart, startKey);
+		this.keyEnd = format(KeyLenEnd, endKey);
 	}
 
 	private int getFlags(String flagsTemp) throws JTFException {
@@ -250,6 +285,10 @@ public class ZSGetRange extends JTFCommand {
 				throw new JTFException(
 						"The argument of flags can't match ZSRangeFlags!");
 			}
+		}
+
+		if (flags == 0) {
+			flags = ZSRangeFlags.START_GT | ZSRangeFlags.END_LE;
 		}
 
 		return flags;

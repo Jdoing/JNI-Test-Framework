@@ -1,37 +1,38 @@
 package com.sandisk.zsjtf.exec;
 
 import com.sandisk.zs.exception.ZSContainerException;
-import com.sandisk.zsjtf.adapter.ZSRangeAdapter;
+import com.sandisk.zsjtf.adapter.ZSContainerAdapter;
 import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.global.ZSAdapter;
 import com.sandisk.zsjtf.global.ZSCommandExec;
 import com.sandisk.zsjtf.util.Log;
 
-public class ZSGetRangeExec extends ZSCommandExec {
+public class ZSOpenContainerExec extends ZSCommandExec {
 
-	private ZSRangeAdapter zsRangeAdapter;
-
-	public ZSGetRangeExec(ZSAdapter zsAdapter) {
+	private ZSContainerAdapter zsContainerAdapter;
+	
+	public ZSOpenContainerExec(ZSAdapter zsAdapter) {
 		super(zsAdapter);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public String Execute() {
 		// TODO Auto-generated method stub
-
+		
 		try {
-			if (zsAdapter instanceof ZSRangeAdapter) {
-				zsRangeAdapter = (ZSRangeAdapter) zsAdapter;
+			if (zsAdapter instanceof ZSContainerAdapter) {
+				zsContainerAdapter = (ZSContainerAdapter) zsAdapter;
 			} else {
 				throw new JTFException(
-						"ZSAdapter do not match ZSRangeAdapter");
+						"ZSAdapter do not match ZSContainerAdapter");
 			}
 
-			Log.logDebug("Start to GetRange");
+			Log.logDebug("Start to OpenContainer");
 
-			zsRangeAdapter.getRange();
+			zsContainerAdapter.open();
 
-			Log.logDebug("GetRange finish");
+			Log.logDebug("OpenContainer finish");
 
 			return "OK";
 

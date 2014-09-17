@@ -1,4 +1,4 @@
-package com.sandisk.zsjtf;
+package com.sandisk.zsjtf.global;
 
 public abstract class ZSCommandExec {
 

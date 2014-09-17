@@ -1,11 +1,13 @@
-package com.sandisk.zsjtf;
+package com.sandisk.zsjtf.adapter;
 
 import com.sandisk.zs.ZSRange;
 import com.sandisk.zs.exception.ZSContainerException;
 import com.sandisk.zs.type.RangeMeta;
 import com.sandisk.zs.type.ZSRangeFlags;
+import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.command.ZSGetRange;
 import com.sandisk.zsjtf.exception.JTFException;
+import com.sandisk.zsjtf.global.ZSAdapter;
 import com.sandisk.zsjtf.util.Log;
 
 public class ZSRangeAdapter extends ZSAdapter {
@@ -21,6 +23,9 @@ public class ZSRangeAdapter extends ZSAdapter {
 	private long endSeq = 0;
 	private int flags = 0;
 
+	private String keyStart;
+	private String keyEnd;
+	
 	private ZSGetRange zsGetRange;
 
 	public ZSGetRange getZSGetRange() {
@@ -35,9 +40,9 @@ public class ZSRangeAdapter extends ZSAdapter {
 			if (jtfCommand instanceof ZSGetRange) {
 				this.zsGetRange = (ZSGetRange) jtfCommand;
 			} else
-				throw new JTFException("Generate ZSGetRange error");
+				throw new JTFException("Create ZSGetRange error");
 
-			this.cguid = ZSGetRange.getCguid();
+			ZSRangeAdapter.cguid = zsGetRange.getCguid();
 			this.keybufSize = zsGetRange.getKeybufSize();
 			this.databufSize = zsGetRange.getDatabufSize();
 			this.keyLenStart = zsGetRange.getKeyLenStart();
@@ -53,6 +58,7 @@ public class ZSRangeAdapter extends ZSAdapter {
 					&& (flags == 0)) {
 
 				Log.logDebug("Initialize the ZSRange without meta paremeter.");
+				
 				this.zsRange = new ZSRange(cguid);
 				// range.begin();
 				Log.logDebug("Initialize the ZSRange finish!");
@@ -63,7 +69,8 @@ public class ZSRangeAdapter extends ZSAdapter {
 
 				RangeMeta meta = new RangeMeta();
 				setMeta(meta);
-				ZSRange range2 = new ZSRange(meta, cguid);
+				
+				this.zsRange = new ZSRange(meta, cguid);
 			}
 		} catch (JTFException e) {
 			// TODO Auto-generated catch block
@@ -82,19 +89,18 @@ public class ZSRangeAdapter extends ZSAdapter {
 			flags = ZSRangeFlags.START_GT | ZSRangeFlags.END_LE;
 		}
 
-		keybufSize = (keybufSize != 0) ? keybufSize : ZSGetRange.MAX_KEY_LEN;
-		databufSize = (databufSize != 0) ? databufSize
-				: ZSGetRange.MAX_DATA_LEN;
-		keyLenStart = (keyLenStart != 0) ? keyLenStart : 8;
-		KeyLenEnd = (KeyLenEnd != 0) ? KeyLenEnd : 8;
-		startSeq = (startSeq != 0) ? startSeq : 0;
-		endSeq = (endSeq != 0) ? endSeq : 0;
-
-		String formatter = String.format("%%0%dd", keyLenStart);
-		String keyStart = String.format(formatter, startKey);
-
-		String fmt = String.format("%%0%dd", KeyLenEnd);
-		String keyEnd = String.format(fmt, endKey);
+//		keybufSize = (keybufSize != 0) ? keybufSize : zsGetRange.MAX_KEY_LEN;
+//		databufSize = (databufSize != 0) ? databufSize
+//				: zsGetRange.MAX_DATA_LEN;
+//		keyLenStart = (keyLenStart != 0) ? keyLenStart : 8;
+//		KeyLenEnd = (KeyLenEnd != 0) ? KeyLenEnd : 8;
+//		startSeq = (startSeq != 0) ? startSeq : 0;
+//		endSeq = (endSeq != 0) ? endSeq : 0;
+//		String formatter = String.format("%%0%dd", keyLenStart);
+//		String keyStart = String.format(formatter, startKey);
+//
+//		String fmt = String.format("%%0%dd", KeyLenEnd);
+//		String keyEnd = String.format(fmt, endKey);
 
 		rmeta.setFlags(flags);
 		rmeta.setStartInfo(keyStart.getBytes(), flags);

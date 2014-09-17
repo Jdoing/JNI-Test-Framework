@@ -8,8 +8,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.sandisk.zsjtf.adapter.ZSRangeAdapter;
 import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.exec.ZSGetRangeExec;
+import com.sandisk.zsjtf.global.ZSCommandExec;
+import com.sandisk.zsjtf.global.ZSCommandExecFactory;
 
 public class TestZSCommandFactory {
 

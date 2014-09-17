@@ -1,4 +1,6 @@
-package com.sandisk.zsjtf;
+package com.sandisk.zsjtf.global;
+
+import com.sandisk.zsjtf.JTFCommand;
 
 public abstract class ZSAdapter {
 

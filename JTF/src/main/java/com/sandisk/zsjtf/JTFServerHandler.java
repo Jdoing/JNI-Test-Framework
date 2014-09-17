@@ -21,6 +21,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import com.sandisk.zsjtf.exec.ZSGetRangeExec;
+import com.sandisk.zsjtf.global.ZSAdapter;
+import com.sandisk.zsjtf.global.ZSAdapterFactory;
+import com.sandisk.zsjtf.global.ZSAdapterManger;
+import com.sandisk.zsjtf.global.ZSCommandExec;
+import com.sandisk.zsjtf.global.ZSCommandExecFactory;
 import com.sandisk.zsjtf.util.Log;
 
 /**
@@ -36,18 +41,18 @@ public class JTFServerHandler extends SimpleChannelInboundHandler<String> {
 			JTFCommand command = JTFCommandFactory
 					.generateCommandObject(rawCommand);
 
-			
-			//Command patter: JTFCommand is invoker, ZSCommandExec is command, ZSAdapter is receiver
+			// Command patter: JTFCommand is invoker, ZSCommandExec is command,
+			// ZSAdapter is receiver
 			ZSAdapterManger zsAdapterManager = new ZSAdapterFactory();
+
 			ZSAdapter zsAdapter = zsAdapterManager.getZSAdapter(command);
-			
+
 			String ZSCommandExecName = command.getZSCommandExecName();
-			
-			ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(ZSCommandExecName,zsAdapter);
+
+			ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(ZSCommandExecName, zsAdapter);
+
 			command.setZSCommandExec(zsCommandExec);
 
-			
-					
 			String retMsg = command.execute();
 			ctx.writeAndFlush(retMsg);
 		} catch (ClassNotFoundException e) {

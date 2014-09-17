@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.exec.ZSGetRangeExec;
+import com.sandisk.zsjtf.global.ZSCommandExec;
 import com.sandisk.zs.exception.ZSException;
 
 /**
@@ -122,28 +123,36 @@ public abstract class JTFCommand {
 
 	protected String getStringProperty(String key, boolean must)
 			throws JTFException {
-		return getProperty(key, must);
+		//return getProperty(key, must);
+		return getStringProperty(key, must, null);
 	}
 
 	protected String getStringProperty(String key, boolean must,
 			String defaultValue) throws JTFException {
 		String value = getProperty(key, must);
+		
+		if(defaultValue==null){
+			return value;
+		}
+		
 		return value == null ? defaultValue : value;
 	}
 
 	protected Integer getIntegerProperty(String key, boolean must)
 			throws JTFException {
-		String value = getProperty(key, must);
-		try {
-			return value == null ? null : new Integer(value);
-		} catch (NumberFormatException e) {
-			throw new JTFException(e.toString());
-		}
+//		String value = getProperty(key, must);
+//		try {
+//			return value == null ? null : new Integer(value);
+//		} catch (NumberFormatException e) {
+//			throw new JTFException(e.toString());
+//		}
+		return getIntegerProperty(key,must, null);
 	}
 
 	protected Integer getIntegerProperty(String key, boolean must,
 			Integer defaultValue) throws JTFException {
 		String value = getProperty(key, must);
+		
 		try {
 			return value == null ? defaultValue : new Integer(value);
 		} catch (NumberFormatException e) {
@@ -153,12 +162,13 @@ public abstract class JTFCommand {
 
 	protected Long getLongProperty(String key, boolean must)
 			throws JTFException {
-		String value = getProperty(key, must);
-		try {
-			return value == null ? null : new Long(value);
-		} catch (NumberFormatException e) {
-			throw new JTFException(e.toString());
-		}
+//		String value = getProperty(key, must);
+//		try {
+//			return value == null ? null : new Long(value);
+//		} catch (NumberFormatException e) {
+//			throw new JTFException(e.toString());
+//		}
+		return getLongProperty(key, must, null);
 	}
 
 	protected Long getLongProperty(String key, boolean must, Long defalutValue)

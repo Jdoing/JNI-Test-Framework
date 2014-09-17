@@ -1,4 +1,4 @@
-package com.sandisk.zsjtf;
+package com.sandisk.zsjtf.global;
 
 import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.command.*;
