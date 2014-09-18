@@ -43,18 +43,26 @@ public class JTFServerHandler extends SimpleChannelInboundHandler<String> {
 
 			// Command patter: JTFCommand is invoker, ZSCommandExec is command,
 			// ZSAdapter is receiver
-			ZSAdapterManger zsAdapterManager = new ZSAdapterFactory();
+//			ZSAdapterManger zsAdapterManager = new ZSAdapterFactory();
+//
+//			ZSAdapter zsAdapter = zsAdapterManager.getZSAdapter(command);
 
-			ZSAdapter zsAdapter = zsAdapterManager.getZSAdapter(command);
+//			String ZSCommandExecName = command.getZSCommandExecName();
 
-			String ZSCommandExecName = command.getZSCommandExecName();
+//			ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(ZSCommandExecName, zsAdapter);
 
-			ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(ZSCommandExecName, zsAdapter);
+//			command.setZSCommandExec(zsCommandExec);
 
+//			Object zsEntry = command.createZSEntry();
+			
+			ZSCommandExec zsCommandExec = ZSCommandExecFactory.createZSCommandExec(command);
+			
 			command.setZSCommandExec(zsCommandExec);
-
+			
 			String retMsg = command.execute();
+			
 			ctx.writeAndFlush(retMsg);
+			
 		} catch (ClassNotFoundException e) {
 			ctx.writeAndFlush("CLIENT_ERROR command not found or not implement yet");
 		}
