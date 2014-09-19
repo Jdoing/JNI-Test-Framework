@@ -1,14 +1,7 @@
 package com.sandisk.zsjtf.command;
 
 import static org.junit.Assert.*;
-
-import java.util.Properties;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import com.sandisk.zsjtf.exception.JTFException;
 
@@ -31,14 +24,22 @@ public class TestZSGetRange {
 	}
 
 	@Test
-	public void test() throws JTFException {
+	public void test() {
 		String rawCommand = "ZSGetRange cguid=5";
 		// String[] tokens = rawCommand.split("\\s+");
 		// Properties initargs = parse(tokens);
 
-		ZSGetRange range = new ZSGetRange(rawCommand);
-
-		assertNotNull("ZSGetRange must not null", range);
+		ZSGetRange range;
+		try {
+			range = new ZSGetRange(rawCommand);
+			assertNotNull("ZSGetRange must not null", range);
+		} catch (JTFException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
+	
+	
 
 }

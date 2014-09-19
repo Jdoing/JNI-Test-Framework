@@ -10,6 +10,8 @@ package com.sandisk.zsjtf.command;
 
 import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.exception.JTFException;
+import com.sandisk.zs.ZSRange;
+import com.sandisk.zs.type.RangeMeta;
 import com.sandisk.zs.type.ZSRangeFlags;
 import com.sandisk.zsjtf.util.Log;
 
@@ -25,17 +27,6 @@ import com.sandisk.zsjtf.util.Log;
  *         %s|CLIENT_ERROR %s
  */
 public class ZSGetRange extends JTFCommand {
-
-	public ZSGetRange(String rawCommand) throws JTFException {
-		super(rawCommand);
-		// TODO Auto-generated constructor stub
-
-		getProperties();
-
-		setOthers();
-
-	}
-
 	private Long cguid = 0L;
 	private Integer keybufSize = 0;
 	private Long databufSize = 0L;
@@ -50,20 +41,23 @@ public class ZSGetRange extends JTFCommand {
 	private String keyStart;
 	private String keyEnd;
 
-	private String ZSAdapterName = "ZSRangeAdapter";
 	private String ZSCommandExecName = "ZSGetRangeExec";
+
+	private ZSRange zsRange;
+
+	public ZSGetRange(String rawCommand) throws JTFException {
+		super(rawCommand);
+		// TODO Auto-generated constructor stub
+
+		getProperties();
+
+		setOthers();
+
+	}
 
 	public String execute() {
 
 		return this.zsCommandExec.Execute();
-	}
-
-	public String getZSAdapterName() {
-		return ZSAdapterName;
-	}
-
-	public void setZSAdapterName(String ZSAdapterName) {
-		this.ZSAdapterName = ZSAdapterName;
 	}
 
 	public int getKeybufSize() {
@@ -184,11 +178,11 @@ public class ZSGetRange extends JTFCommand {
 
 		Log.logDebug("get keybufSize");
 		keybufSize = getIntegerProperty(KEYBUF_SIZE, false);
-		keybufSize = (keybufSize != 0) ? keybufSize : MAX_KEY_LEN;
+		keybufSize = (keybufSize != null) ? keybufSize : MAX_KEY_LEN;
 
 		Log.logDebug("get databufSize");
 		databufSize = getLongProperty(DATABUF_SIZE, false);
-		databufSize = (databufSize != 0) ? databufSize : MAX_DATA_LEN;
+		databufSize = (databufSize != null) ? databufSize : MAX_DATA_LEN;
 
 		Log.logDebug("get startKey");
 		startKey = getIntegerProperty(START_KEY, false);
@@ -198,19 +192,19 @@ public class ZSGetRange extends JTFCommand {
 
 		Log.logDebug("get keyLenStart");
 		keyLenStart = getIntegerProperty(KEYLEN_START, false);
-		keyLenStart = (keyLenStart != 0) ? keyLenStart : 8;
+		keyLenStart = (keyLenStart != null) ? keyLenStart : 8;
 
 		Log.logDebug("get KeyLenEnd");
 		KeyLenEnd = getIntegerProperty(KEYLEN_END, false);
-		KeyLenEnd = (KeyLenEnd != 0) ? KeyLenEnd : 8;
+		KeyLenEnd = (KeyLenEnd != null) ? KeyLenEnd : 8;
 
 		Log.logDebug("get startSeq");
 		startSeq = getLongProperty(START_SEQ, false);
-		startSeq = (startSeq != 0) ? startSeq : 0;
+		startSeq = (startSeq != null) ? startSeq : 0L;
 
 		Log.logDebug("get endSeq");
 		endSeq = getLongProperty(END_SEQ, false);
-		endSeq = (endSeq != 0) ? endSeq : 0;
+		endSeq = (endSeq != null) ? endSeq : 0L;
 
 		Log.logDebug("Get flags");
 		// flags = this.getIntegerProperty(FLAGS, false,FLAGS_DEFAULT_VALUE);
@@ -287,11 +281,51 @@ public class ZSGetRange extends JTFCommand {
 			}
 		}
 
-		if (flags == 0) {
+		if (flags == null) {
 			flags = ZSRangeFlags.START_GT | ZSRangeFlags.END_LE;
 		}
 
 		return flags;
+	}
+
+	@Override
+	public Object createZSEntry() throws Exception {
+		// TODO Auto-generated method stub
+
+		if ((keybufSize == null) && (databufSize == null) && (startKey == null)
+				&& (endKey == null) && (startSeq == null) && (endSeq == null)
+				&& (flags == null)) {
+
+			Log.logDebug("Initialize the ZSRange without meta paremeter.");
+
+			this.zsRange = new ZSRange(cguid);
+			// range.begin();
+			Log.logDebug("Initialize the ZSRange finish!");
+
+		} else {
+			// range query part of the data
+			Log.logDebug("Initialize the ZSRange with meta paremeter.");
+
+			RangeMeta meta = new RangeMeta();
+			setMeta(meta);
+
+			this.zsRange = new ZSRange(meta, cguid);
+		}
+		
+		
+		return zsRange;
+	}
+
+	private void setMeta(RangeMeta rmeta) throws Exception {
+		if (flags == 0) {
+			flags = ZSRangeFlags.START_GT | ZSRangeFlags.END_LE;
+		}
+
+		rmeta.setFlags(flags);
+		rmeta.setStartInfo(keyStart.getBytes(), flags);
+		rmeta.setEndInfo(keyEnd.getBytes(), flags);
+		rmeta.setStartSeq(startSeq);
+		rmeta.setEndSeq(endSeq);
 	}
 
 }

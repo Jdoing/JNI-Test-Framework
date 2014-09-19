@@ -3,6 +3,8 @@ package com.sandisk.zsjtf;
 import java.lang.reflect.Constructor;
 import java.util.Properties;
 
+import com.sandisk.zs.type.ContainerProperty;
+import com.sandisk.zsjtf.command.ZSOpenContainer;
 import com.sandisk.zsjtf.exception.JTFException;
 
 /**
@@ -31,21 +33,32 @@ public class JTFCommandFactory {
 		Constructor<?> constructor = clazz.getConstructor(String.class);
 		
 		JTFCommand command = (JTFCommand) constructor.newInstance(rawCommand);
+		
+//		if(command.getClass().equals(ZSOpenContainer.class)){
+//			ContainerProperty containerProps = ContainerProperty
+//					.getDefaultProperty();
+//			
+//			ZSOpenContainer zsOpenContainer = (ZSOpenContainer)command;
+//			
+//			zsOpenContainer.setContainerProperty(containerProps);
+//			return zsOpenContainer;
+//		}
+//		
 
 		return command;
 	}
 
-	private static Properties parse(String[] tokens) {
-		Properties args = new Properties();
-
-		for (int i = 0; i < tokens.length; ++i) {
-			if (i == 0) {
-				continue;
-			}
-			String[] arg = tokens[i].split("=");
-			args.setProperty(arg[0], arg[1]);
-		}
-
-		return args;
-	}
+//	private static Properties parse(String[] tokens) {
+//		Properties args = new Properties();
+//
+//		for (int i = 0; i < tokens.length; ++i) {
+//			if (i == 0) {
+//				continue;
+//			}
+//			String[] arg = tokens[i].split("=");
+//			args.setProperty(arg[0], arg[1]);
+//		}
+//
+//		return args;
+//	}
 }

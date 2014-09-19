@@ -1,5 +1,8 @@
 package com.sandisk.zsjtf;
 
+import com.sandisk.zs.exception.ZSContainerException;
+import com.sandisk.zsjtf.exception.JTFException;
+
 public class SampleJTFCommand extends JTFCommand {
 
 	public SampleJTFCommand(String rawCommand) {
@@ -14,13 +17,14 @@ public class SampleJTFCommand extends JTFCommand {
 	}
 
 	@Override
-	public String getZSAdapterName() {
+	public String getZSCommandExecName() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getZSCommandExecName() {
+	public Object createZSEntry() throws ZSContainerException, JTFException,
+			Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

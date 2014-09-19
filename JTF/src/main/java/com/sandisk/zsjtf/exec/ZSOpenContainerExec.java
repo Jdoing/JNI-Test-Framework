@@ -21,43 +21,33 @@ public class ZSOpenContainerExec extends ZSCommandExec {
 		super(jtfCommand);
 		// TODO Auto-generated constructor stub
 
-
-
-
-
 		if (jtfCommand instanceof ZSOpenContainer) {
 
 			zsOpenContainer = (ZSOpenContainer) jtfCommand;
+		} else {
+			throw new JTFException(
+					"Fail when cast JTFCommand to ZSOpenContainer");
 		}
+
 	}
-	
-	public void setZSEntry(Object zsEntry) throws JTFException{
-		
+
+	public void setZSEntry(Object zsEntry) throws JTFException {
+
 		if (zsEntry instanceof ZSContainer) {
 			zsContainer = (ZSContainer) zsEntry;
 		} else {
 			throw new JTFException("ZSEntry do not match ZSContainer");
 		}
-		
+
 	}
 
 	@Override
 	public String Execute() {
 		// TODO Auto-generated method stub
 
-		// try {
-		// if (zsAdapter instanceof ZSContainerAdapter) {
-		// zsContainerAdapter = (ZSContainerAdapter) zsAdapter;
-		// } else {
-		// throw new JTFException(
-		// "ZSAdapter do not match ZSContainerAdapter");
-		// }
-
-		OpenContainerMode openContainerMode = zsOpenContainer
-				.getOpenContainerMode();
-
 		try {
-
+			OpenContainerMode openContainerMode = zsOpenContainer
+					.getOpenContainerMode();
 			Log.logDebug("Start to OpenContainer");
 			if (openContainerMode == null) {
 				zsContainer.create();

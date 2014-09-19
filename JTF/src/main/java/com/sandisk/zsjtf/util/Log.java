@@ -33,22 +33,22 @@ public class Log {
             Log.getPropertyFile();
     }
 
-    public static void logInfo(String message) {
+    public static void logInfo(Object message) {
         Log.getFlag();
         logger.info(message);
     }
     
-    public static void logDebug(String message) {
+    public static void logDebug(Object message) {
         Log.getFlag();
         logger.debug(message);
     }
 
-    public static void logError(String message) {
+    public static void logError(Object message) {
         Log.getFlag();
         logger.error(message);
     }
 
-    public static void logWarn(String message) {
+    public static void logWarn(Object message) {
         Log.getFlag();
         logger.warn(message);
     }

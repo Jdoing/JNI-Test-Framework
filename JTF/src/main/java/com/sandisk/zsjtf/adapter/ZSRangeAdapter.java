@@ -28,6 +28,8 @@ public class ZSRangeAdapter extends ZSAdapter {
 	
 	private ZSGetRange zsGetRange;
 
+	
+	
 	public ZSGetRange getZSGetRange() {
 		return zsGetRange;
 	}

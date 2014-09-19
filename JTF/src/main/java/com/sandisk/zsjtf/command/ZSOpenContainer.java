@@ -55,14 +55,17 @@ public class ZSOpenContainer extends JTFCommand {
 	private OpenContainerMode openContainerMode;
 	private ContainerMode containerMode;
 
-	private String ZSAdapterName = "ZSContainerAdapter";
 	private String ZSCommandExecName = "ZSOpenContainerExec";
 
+	private ZSContainer container;
+	private ContainerProperty containerProps;
+	
 	public ZSOpenContainer(String rawCommand) throws JTFException {
 		super(rawCommand);
 		// TODO Auto-generated constructor stub
 
 		getProperties();
+		
 		setDurabilityLevel();
 		setContainerMode();
 		setOpenContainerMode();
@@ -87,13 +90,20 @@ public class ZSOpenContainer extends JTFCommand {
 		return this.zsCommandExec.Execute();
 	}
 
+	public void setContainerProperty(ContainerProperty containerProps){
+		this.containerProps = containerProps;
+	}
+	
 	public Object createZSEntry() throws ZSContainerException, JTFException {
-		ZSContainer container;
+		
 		if (openContainerMode == null) {
 			/* Create a new container. */
-			ContainerProperty containerProps = ContainerProperty
-					.getDefaultProperty();
-
+//			ContainerProperty containerProps = ContainerProperty
+//					.getDefaultProperty();
+			if(containerProps == null){
+				throw new JTFException("ContainerProperty must not be null");
+			}
+			
 			containerProps.setFifoMode(isFIFO);
 			containerProps.setPersistent(isPersistent);
 			containerProps.setEvicting(isEvicting);
@@ -147,6 +157,8 @@ public class ZSOpenContainer extends JTFCommand {
 		} else {
 			throw new JTFException("Durability level unrecognized");
 		}
+		
+		
 	}
 
 	private void setContainerMode() throws JTFException {
@@ -201,16 +213,11 @@ public class ZSOpenContainer extends JTFCommand {
 	// }
 	// }
 
-	@Override
-	public String getZSAdapterName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public String getZSCommandExecName() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.ZSCommandExecName;
 	}
 
 	public String getContainerName() {

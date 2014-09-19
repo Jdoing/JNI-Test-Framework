@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 
 import com.sandisk.zsjtf.JTFCommand;
 import com.sandisk.zsjtf.exception.JTFException;
+import com.sandisk.zsjtf.util.Log;
 
 public class ZSCommandExecFactory {
 
@@ -15,6 +16,11 @@ public class ZSCommandExecFactory {
 		}
 
 		String ZSCommandExecName = jtfCommand.getZSCommandExecName();
+		Log.logDebug("The ZSCommandExecName is: "+ZSCommandExecName);
+		
+		if(ZSCommandExecName == null){
+			throw new JTFException("ZSCommandExecName must be not null");
+		}
 		
 		String className = "com.sandisk.zsjtf.exec."+ZSCommandExecName;
 
@@ -22,14 +28,10 @@ public class ZSCommandExecFactory {
 
 		//Object[] args = new Object[]{zsAdapter};
 		
-		Constructor<?> constructor = clazz.getConstructor(ZSAdapter.class);
+		Constructor<?> constructor = clazz.getConstructor(JTFCommand.class);
 
 		ZSCommandExec zsCommandExec = (ZSCommandExec) constructor.newInstance(jtfCommand);
 
-		Object zsEntry = jtfCommand.createZSEntry();
-		
-		zsCommandExec.setZSEntry(zsEntry);
-		
 		return zsCommandExec;
 	}
 }
