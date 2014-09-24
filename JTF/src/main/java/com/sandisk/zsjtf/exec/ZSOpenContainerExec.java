@@ -4,12 +4,12 @@ import com.sandisk.zs.ZSContainer;
 import com.sandisk.zs.exception.ZSContainerException;
 import com.sandisk.zs.type.OpenContainerMode;
 import com.sandisk.zsjtf.JTFCommand;
-import com.sandisk.zsjtf.adapter.ZSContainerAdapter;
 import com.sandisk.zsjtf.command.ZSOpenContainer;
 import com.sandisk.zsjtf.exception.JTFException;
-import com.sandisk.zsjtf.global.ZSAdapter;
 import com.sandisk.zsjtf.global.ZSCommandExec;
 import com.sandisk.zsjtf.util.Log;
+import com.sandisk.zsjtf.util.NameIDMapper;
+import com.sandisk.zsjtf.util.ContainerManager;
 
 public class ZSOpenContainerExec extends ZSCommandExec {
 
@@ -38,7 +38,6 @@ public class ZSOpenContainerExec extends ZSCommandExec {
 		} else {
 			throw new JTFException("ZSEntry do not match ZSContainer");
 		}
-
 	}
 
 	@Override
@@ -49,14 +48,27 @@ public class ZSOpenContainerExec extends ZSCommandExec {
 			OpenContainerMode openContainerMode = zsOpenContainer
 					.getOpenContainerMode();
 			Log.logDebug("Start to OpenContainer");
+
+			long containerID;
+			
 			if (openContainerMode == null) {
 				zsContainer.create();
+
+				containerID = zsContainer.getContainerId();
+				
+				String containerName = zsContainer.getContainerName();
+				
+				NameIDMapper.getInstance().setNameIDMap(containerName, containerID);
+				ContainerManager.getInstance().setContainer(containerID, zsContainer);
+				
 			} else {
 				zsContainer.open(openContainerMode);
+				containerID = zsContainer.getContainerId();
 			}
+
 			Log.logDebug("OpenContainer finish");
 
-			return zsOpenContainer.handleSuccessReturn();
+			return zsOpenContainer.handleSuccessReturn() + " cguid=" + containerID;
 		} catch (ZSContainerException e) {
 			return zsOpenContainer.handleServerErrorReturn(e);
 		}

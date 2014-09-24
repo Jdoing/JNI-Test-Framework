@@ -58,6 +58,7 @@ public class TestZSOpenContainer {
 			// createMockBuilder(ContainerProperty.class).createMock();
 			zsOpenContainer = new ZSOpenContainer(rawCommand);
 			assertNotNull(zsOpenContainer);
+			
 			mockContainerProps = createMock("mockContainerProps",
 					ContainerProperty.class);
 
@@ -83,7 +84,7 @@ public class TestZSOpenContainer {
 
 			zsOpenContainer.setContainerProperty(mockContainerProps);
 
-			Object object = zsOpenContainer.createZSEntry();
+			Object object = zsOpenContainer.getZSEntry();
 
 			if (object instanceof ZSContainer) {
 				this.zsContainer = (ZSContainer) object;

@@ -21,51 +21,62 @@ import com.sandisk.zs.exception.ZSException;
  *
  * @author rchen
  *
- * args:
- *   cguid=%u
+ *         args: cguid=%u
  *
- * must have: cguid
+ *         must have: cguid
  *
- * return:
- *   success: OK
- *   failed: SERVER_ERROR %s | CLIENT_ERROR %s
+ *         return: success: OK failed: SERVER_ERROR %s | CLIENT_ERROR %s
  */
-public class ZSDeleteContainer extends JTFCommand
-{
-    public ZSDeleteContainer(String rawCommand) throws JTFException {
+public class ZSDeleteContainer extends JTFCommand {
+	private String ZSCommandExecName = "ZSDeleteContainerExec";
+
+	public ZSDeleteContainer(String rawCommand) throws JTFException {
 		super(rawCommand);
 		// TODO Auto-generated constructor stub
 		getProperties();
 	}
 
 	/* Command arg list start */
-    private Long containerID;
-    /* Command arg list end */
+	private Long containerID;
+	private ZSContainer zsContainer;
 
-    @Override
-    public String execute()
-    {
-        try {
-            getProperties();
-            deleteContainer();
-            return handleSuccessReturn();
-        } catch (ZSException e) {
-            return handleServerErrorReturn(e);
-        } catch (JTFException e) {
-            return handleClientErrorReturn(e);
-        }
-    }
+	/* Command arg list end */
 
-    private void getProperties() throws JTFException
-    {
-        containerID = getLongProperty(CGUID, true);
-    }
+	@Override
+	public String execute() throws JTFException {
+		String result = zsCommandExec.Execute();
+		NameIDMapper.getInstance().removeNameIDMap(
+				zsContainer.getContainerName());
+		ContainerManager.getInstance().removeContainer(containerID);
+		return result;
+//		return zsCommandExec.Execute();
+		
+	}
 
-    private void deleteContainer() throws JTFException, ZSContainerException
-    {
-        ZSContainer container = ContainerManager.getInstance().getContainer(containerID);
-        container.drop();
-        NameIDMapper.getInstance().removeNameIDMap(container.getContainerName());
-        ContainerManager.getInstance().removeContainer(containerID);
-    }
+	private void getProperties() throws JTFException {
+		containerID = getLongProperty(CGUID, true);
+	}
+
+	// private void deleteContainer() throws JTFException, ZSContainerException
+	// {
+	// ZSContainer container =
+	// ContainerManager.getInstance().getContainer(containerID);
+	// container.drop();
+	// NameIDMapper.getInstance().removeNameIDMap(container.getContainerName());
+	// ContainerManager.getInstance().removeContainer(containerID);
+	// }
+
+	@Override
+	public String getZSCommandExecName() {
+		// TODO Auto-generated method stub
+		return ZSCommandExecName;
+	}
+
+	@Override
+	public Object getZSEntry() throws ZSContainerException, JTFException,
+			Exception {
+		// TODO Auto-generated method stub
+		zsContainer = ContainerManager.getInstance().getContainer(containerID);
+		return zsContainer;
+	}
 }

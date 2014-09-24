@@ -3,7 +3,6 @@ package com.sandisk.zsjtf;
 import java.util.Properties;
 
 import com.sandisk.zsjtf.exception.JTFException;
-import com.sandisk.zsjtf.exec.ZSGetRangeExec;
 import com.sandisk.zsjtf.global.ZSCommandExec;
 import com.sandisk.zs.exception.ZSContainerException;
 import com.sandisk.zs.exception.ZSException;
@@ -71,8 +70,8 @@ public abstract class JTFCommand {
 	protected static final int FLAGS_DEFAULT_VALUE = 0;
 
 	// Set extreme value(yjiang add)
-	protected static final int MAX_KEY_LEN = 200;
-	protected static final int MAX_DATA_LEN = 8 * 1024 * 1024; // 8M
+	public static final int MAX_KEY_LEN = 200;
+	public static final int MAX_DATA_LEN = 8 * 1024 * 1024; // 8M
 
 	private Properties args;
 
@@ -86,7 +85,7 @@ public abstract class JTFCommand {
 		this.zsCommandExec = zsCommandExec;
 	}
 
-	public abstract String execute();
+	public abstract String execute() throws Exception;
 
 	public abstract String getZSCommandExecName();
 
@@ -94,7 +93,7 @@ public abstract class JTFCommand {
 //		this.args = args;
 //	}
 
-	public abstract Object createZSEntry() throws ZSContainerException, JTFException, Exception;
+	public abstract Object getZSEntry() throws ZSContainerException, JTFException, Exception;
 	
 	private  Properties getArgs(String rawCommand) {
 		String[] tokens = rawCommand.split("\\s+");
@@ -110,15 +109,15 @@ public abstract class JTFCommand {
 		return args;
 	}
 	
-	public String handleSuccessReturn(){
+	public static String handleSuccessReturn(){
 		return "OK";
 	}
 
-	public String handleServerErrorReturn(Exception e) {
+	public static String handleServerErrorReturn(Exception e) {
 		return "SERVER_ERROR " + e.toString();
 	}
 
-	public String handleClientErrorReturn(Exception e) {
+	public static String handleClientErrorReturn(Exception e) {
 		return "CLIENT_ERROR " + e.toString();
 	}
 

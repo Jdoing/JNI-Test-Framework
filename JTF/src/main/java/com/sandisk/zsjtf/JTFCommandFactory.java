@@ -1,10 +1,6 @@
 package com.sandisk.zsjtf;
 
 import java.lang.reflect.Constructor;
-import java.util.Properties;
-
-import com.sandisk.zs.type.ContainerProperty;
-import com.sandisk.zsjtf.command.ZSOpenContainer;
 import com.sandisk.zsjtf.exception.JTFException;
 
 /**

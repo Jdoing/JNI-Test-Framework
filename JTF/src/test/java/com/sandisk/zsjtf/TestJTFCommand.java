@@ -3,8 +3,6 @@ package com.sandisk.zsjtf;
 import static org.junit.Assert.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import com.sandisk.zsjtf.exception.JTFException;
 
 public class TestJTFCommand {

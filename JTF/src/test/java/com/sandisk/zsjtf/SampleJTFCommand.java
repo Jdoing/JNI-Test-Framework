@@ -23,7 +23,7 @@ public class SampleJTFCommand extends JTFCommand {
 	}
 
 	@Override
-	public Object createZSEntry() throws ZSContainerException, JTFException,
+	public Object getZSEntry() throws ZSContainerException, JTFException,
 			Exception {
 		// TODO Auto-generated method stub
 		return null;

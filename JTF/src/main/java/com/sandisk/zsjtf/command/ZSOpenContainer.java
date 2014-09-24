@@ -94,7 +94,7 @@ public class ZSOpenContainer extends JTFCommand {
 		this.containerProps = containerProps;
 	}
 	
-	public Object createZSEntry() throws ZSContainerException, JTFException {
+	public Object getZSEntry() throws ZSContainerException, JTFException {
 		
 		if (openContainerMode == null) {
 			/* Create a new container. */
@@ -115,9 +115,9 @@ public class ZSOpenContainer extends JTFCommand {
 
 			container = new ZSContainer(containerName, containerProps);
 			// container.create();
-			containerID = container.getContainerId();
-			NameIDMapper.getInstance().setNameIDMap(containerName, containerID);
-			ContainerManager.getInstance().setContainer(containerID, container);
+//			containerID = container.getContainerId();
+//			NameIDMapper.getInstance().setNameIDMap(containerName, containerID);
+//			ContainerManager.getInstance().setContainer(containerID, container);
 		} else {
 			/* Open an existing container. */
 			containerID = NameIDMapper.getInstance()
@@ -157,8 +157,6 @@ public class ZSOpenContainer extends JTFCommand {
 		} else {
 			throw new JTFException("Durability level unrecognized");
 		}
-		
-		
 	}
 
 	private void setContainerMode() throws JTFException {

@@ -19,13 +19,10 @@ package com.sandisk.zsjtf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-
+import com.sandisk.zs.exception.ZSContainerException;
 import com.sandisk.zs.type.ContainerProperty;
 import com.sandisk.zsjtf.command.ZSOpenContainer;
-import com.sandisk.zsjtf.exec.ZSGetRangeExec;
-import com.sandisk.zsjtf.global.ZSAdapter;
-import com.sandisk.zsjtf.global.ZSAdapterFactory;
-import com.sandisk.zsjtf.global.ZSAdapterManger;
+import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.global.ZSCommandExec;
 import com.sandisk.zsjtf.global.ZSCommandExecFactory;
 import com.sandisk.zsjtf.util.Log;
@@ -36,9 +33,11 @@ import com.sandisk.zsjtf.util.Log;
 @Sharable
 public class JTFServerHandler extends SimpleChannelInboundHandler<String> {
 	@Override
-	public void channelRead0(ChannelHandlerContext ctx, String rawCommand)
-			throws Exception {
+	public void channelRead0(ChannelHandlerContext ctx, String rawCommand){
+			
 		try {
+			assert rawCommand!=null;
+			
 			Log.logInfo(rawCommand);
 			JTFCommand jtfCommand = JTFCommandFactory
 					.generateCommandObject(rawCommand);
@@ -72,8 +71,8 @@ public class JTFServerHandler extends SimpleChannelInboundHandler<String> {
 			ZSCommandExec zsCommandExec = ZSCommandExecFactory
 					.createZSCommandExec(jtfCommand);
 
-			// set receiver which execute JNI
-			Object zsEntry = jtfCommand.createZSEntry();
+			// create receiver which execute JNI
+			Object zsEntry = jtfCommand.getZSEntry();
 			zsCommandExec.setZSEntry(zsEntry);
 
 			jtfCommand.setZSCommandExec(zsCommandExec);
@@ -84,6 +83,16 @@ public class JTFServerHandler extends SimpleChannelInboundHandler<String> {
 
 		} catch (ClassNotFoundException e) {
 			ctx.writeAndFlush("CLIENT_ERROR command not found or not implement yet");
+		} 
+		catch (JTFException e) {
+			// TODO Auto-generated catch block
+			ctx.writeAndFlush("CLIENT_ERROR: "+e.toString());
+		} catch (ZSContainerException e) {
+			// TODO Auto-generated catch block
+			ctx.writeAndFlush("SERVER_ERROR : "+e.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			ctx.writeAndFlush("SERVER_ERROR or others : "+e.toString());
 		}
 	}
 

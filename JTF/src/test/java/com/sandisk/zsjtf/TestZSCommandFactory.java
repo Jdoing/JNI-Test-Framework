@@ -3,8 +3,6 @@ package com.sandisk.zsjtf;
 import static org.junit.Assert.*;
 
 import org.junit.*;
-
-import com.sandisk.zsjtf.exception.JTFException;
 import com.sandisk.zsjtf.exec.ZSOpenContainerExec;
 import com.sandisk.zsjtf.global.ZSCommandExec;
 import com.sandisk.zsjtf.global.ZSCommandExecFactory;
@@ -31,10 +29,6 @@ public class TestZSCommandFactory {
 				.generateCommandObject(rawCommand);
 
 		assertNotNull(jtfCommand);
-		
-		String ZSCommandExecName = jtfCommand.getZSCommandExecName();
-//		System.out.println(ZSCommandExecName);
-		
 		
 		ZSCommandExec zsCommandExec = ZSCommandExecFactory
 				.createZSCommandExec(jtfCommand);
