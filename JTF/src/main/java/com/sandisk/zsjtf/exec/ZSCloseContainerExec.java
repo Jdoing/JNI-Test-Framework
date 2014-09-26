@@ -21,10 +21,10 @@ public class ZSCloseContainerExec extends ZSCommandExec {
 
 		try {
 			zsContainer.close();
-			return jtfCommand.handleSuccessReturn();
+			return JTFCommand.handleSuccessReturn();
 		} catch (ZSContainerException e) {
 			// TODO Auto-generated catch block
-			return jtfCommand.handleServerErrorReturn(e);
+			return JTFCommand.handleServerErrorReturn(e);
 		}
 
 	}

@@ -47,6 +47,12 @@ public class MiscUtils
         System.arraycopy(src.getBytes(), 0, dist, 0, src.length());
     }
 
+	public static String specialFormat(Object keyLength, Object integerKey) {
+		String formatter = String.format("%%0%dd", keyLength);
+		String result = String.format(formatter, integerKey);
+		return result;
+	}
+    
     public static int encodeIntegerKey(byte[] key) throws JTFException
     {
         try {

@@ -27,7 +27,7 @@ public class ZSWriteObjectExec extends ZSCommandExec {
 
 	private WriteObjectMode writeObjectMode;
 
-	public static final int MAX_KEY_LEN = 200;
+//	public static final int MAX_KEY_LEN = 200;
 
 	public ZSWriteObjectExec(JTFCommand jtfCommand) throws JTFException {
 		super(jtfCommand);
@@ -68,7 +68,7 @@ public class ZSWriteObjectExec extends ZSCommandExec {
 					ByteBuffManager.getInstance().arraycopy(key, keyOffset,
 							keyLength);
 				} else {
-					key = new byte[MAX_KEY_LEN];
+					key = new byte[JTFCommand.MAX_KEY_LEN];
 					integerKey = initialIntegerKey + i;
 					/* Decode key by integer key and length */
 					MiscUtils.decodeIntegerKey(key, integerKey, keyLength);
@@ -84,11 +84,11 @@ public class ZSWriteObjectExec extends ZSCommandExec {
 				}
 			}
 
-			return jtfCommand.handleSuccessReturn();
+			return JTFCommand.handleSuccessReturn();
 		} catch (ZSException e) {
-			return jtfCommand.handleServerErrorReturn(e);
+			return JTFCommand.handleServerErrorReturn(e);
 		} catch (JTFException e) {
-			return jtfCommand.handleClientErrorReturn(e);
+			return JTFCommand.handleClientErrorReturn(e);
 		}
 
 	}

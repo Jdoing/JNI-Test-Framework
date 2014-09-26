@@ -68,9 +68,9 @@ public class ZSOpenContainerExec extends ZSCommandExec {
 
 			Log.logDebug("OpenContainer finish");
 
-			return zsOpenContainer.handleSuccessReturn() + " cguid=" + containerID;
+			return JTFCommand.handleSuccessReturn() + " cguid=" + containerID;
 		} catch (ZSContainerException e) {
-			return zsOpenContainer.handleServerErrorReturn(e);
+			return JTFCommand.handleServerErrorReturn(e);
 		}
 	}
 }

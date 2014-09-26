@@ -70,7 +70,7 @@ public abstract class JTFCommand {
 	protected static final int FLAGS_DEFAULT_VALUE = 0;
 
 	// Set extreme value(yjiang add)
-	public static final int MAX_KEY_LEN = 200;
+	public static final int MAX_KEY_LEN = 2000;
 	public static final int MAX_DATA_LEN = 8 * 1024 * 1024; // 8M
 
 	private Properties args;

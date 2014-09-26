@@ -31,11 +31,11 @@ public class ZSGetContainerPropsExec extends ZSCommandExec {
 
 	private String handleSuccessReturn() {
 		String ret = "OK";
-		ret += ("\ncguid=" + containerProps.getContainerId());
-		ret += ("\nfifo_mode=" + (containerProps.getFifoMode() ? 1 : 0));
-		ret += ("\nevicting=" + (containerProps.getEvicting() ? 1 : 0));
-		ret += ("\nwritethru=" + (containerProps.getWritethru() ? 1 : 0));
-		ret += ("\nsize=" + containerProps.getSize());
+		ret += (" cguid=" + containerProps.getContainerId());
+		ret += (" fifo_mode=" + (containerProps.getFifoMode() ? 1 : 0));
+		ret += (" evicting=" + (containerProps.getEvicting() ? 1 : 0));
+		ret += (" writethru=" + (containerProps.getWritethru() ? 1 : 0));
+		ret += (" size=" + containerProps.getSize());
 		DurabilityLevel durabilityLevel = containerProps.getDurabilityLevel();
 		int dLevel = -1;
 		if (durabilityLevel == DurabilityLevel.ZS_DURABILITY_PERIODIC) {

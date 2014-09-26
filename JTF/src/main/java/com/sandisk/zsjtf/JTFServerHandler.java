@@ -75,6 +75,7 @@ public class JTFServerHandler extends SimpleChannelInboundHandler<String> {
 			Object zsEntry = jtfCommand.getZSEntry();
 			zsCommandExec.setZSEntry(zsEntry);
 
+			//set commandExec
 			jtfCommand.setZSCommandExec(zsCommandExec);
 
 			String retMsg = jtfCommand.execute();

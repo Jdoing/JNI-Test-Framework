@@ -62,7 +62,7 @@ public class ZSDeleteObject extends JTFCommand {
 
 	private void getProperties() throws JTFException {
 		containerID = getLongProperty(CGUID, true);
-		initialIntegerKey = getIntegerProperty(KEY, false, KEY_DEFAULT_VALUE);
+		initialIntegerKey = getIntegerProperty(KEY, false);
 		initialKeyOffset = getIntegerProperty(KEY_OFFSET, false,
 				KEY_OFFSET_DEFAULT_VALUE);
 		keyLength = getIntegerProperty(KEY_LEN, false, KEY_LEN_DEFAULT_VALUE);

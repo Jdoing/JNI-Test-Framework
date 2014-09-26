@@ -20,10 +20,10 @@ public class ZSDeleteContainerExec extends ZSCommandExec {
 		// TODO Auto-generated method stub
 		try {
 			zsContainer.drop();
-			return  jtfCommand.handleSuccessReturn();
+			return  JTFCommand.handleSuccessReturn();
 		} catch (ZSContainerException e) {
 			// TODO Auto-generated catch block
-			return jtfCommand.handleServerErrorReturn(e);
+			return JTFCommand.handleServerErrorReturn(e);
 		}
 	}
 
